@@ -1,5 +1,4 @@
-import { truncate } from "fs";
-import { createSchema, Type, typedModel } from 'ts-mongoose';
+import { createSchema } from 'ts-mongoose';
 
 import { v4 as uuid } from 'uuid';
 
@@ -29,3 +28,4 @@ const UserSchema = createSchema({
     }
 })
 
+export default UserSchema;

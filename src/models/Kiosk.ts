@@ -1,10 +1,9 @@
-import { truncate } from "fs";
-import { createSchema, Type, typedModel } from 'ts-mongoose';
+import { createSchema } from 'ts-mongoose';
 
 import { v4 as uuid } from 'uuid';
 
 
-const UserSchema = createSchema({
+const KioskSchema = createSchema({
     uniqueID: {
         type: String,
         unique: true,
@@ -12,4 +11,6 @@ const UserSchema = createSchema({
         default: uuid()
     }
 })
+
+export default KioskSchema;
 
