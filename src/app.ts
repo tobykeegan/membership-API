@@ -5,17 +5,9 @@ import bodyParser from 'body-parser';
 import routes from './routes/index';
 // import passport from "passport";
 // import { BasicStrategy } from "passport-http";
-import connect from './connect';
 
 const app: Application = express();
 const PORT = 3000;
-
-export const db = `mongodb://127.0.0.1:27017/?compressors=zlib&gssapiServiceName=mongodb/Membership-API`;
-
-/** Call the connection from connect.ts
- * @param db - the URL for the MongoDB
- */
-connect({ db });
 
 /**
  * We can increase the security of the API by using
