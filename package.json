@@ -6,9 +6,9 @@
   "type": "module",
   "scripts": {
     "dev": "ts-node src/app.ts",
-    "start": "ts-node dist/app.js",
+    "start": "node dist/app.js",
     "build": "tsc -p .",
-    "lint": "eslint . --ext .ts && npx tsc --noemit",
+    "lint": "npx prettier --write . && eslint . --ext .ts && npx tsc --noemit",
     "test": ""
   },
   
