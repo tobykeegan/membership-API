@@ -20,5 +20,4 @@ script:
     - npm run build
     - npm run test
 
-    - node_modules/.bin/newman run
-    tests/testcollection.json
+    - node_modules/.bin/newman run tests/testcollection.json
