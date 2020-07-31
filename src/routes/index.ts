@@ -21,7 +21,9 @@ routes.get('/', async (req, res) => {
 
     if (auth) {
         // authorised kiosks will see this message
-        res.status(200).json({ detectedUser: req.get('kioskID') });
+        res.status(200).json({
+            detectedUser: `${req.get('kioskID')} connected.`,
+        });
     } else {
         // reject noauth kiosks
         res.status(403).json({ message: 'Unauthorised access denied.' });
@@ -37,18 +39,26 @@ routes.get('/user/:id', async (req, res) => {
     if (auth) {
         // return user json data
 
-        const user = await getUser(req.params.id);
-
-        console.log(user);
-
-        if (user) {
-            res.status(200).json(user);
-        } else {
-            res.status(404).json({
-                message: 'User not found.',
-                failedID: req.params.id,
+        try{
+            await getUser(req.params.id)
+            .then((user) => {
+                res.status(200).json(user);
+            })
+            .catch((err) => {
+                console.error(err);
+                res.status(404).json({
+                    message: 'User not found.',
+                    failedID: req.params.id,
+                });
             });
+        }catch(err){
+            console.error(err);
+            res.status(400).json({
+                message : 'The ID provided was invalid. It must be a string of 12 bytes.',
+                failedID : req.params.id
+            })
         }
+
     }
 });
 
