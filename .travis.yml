@@ -6,7 +6,6 @@ cache:
     directories:
         - 'node_modules'
 
-
 install:
     - npm install newman
 
@@ -14,11 +13,8 @@ before_script:
     - node --version
     - npm --version
     - node_modules/.bin/newman --version
-        
+
 script:
     - npm run lint
     - npm run build
     - npm run test
-    - npm run dev &
-
-    - node_modules/.bin/newman run tests/testcollection.json
