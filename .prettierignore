@@ -1,0 +1,13 @@
+dist
+node_modules
+
+.eslintignore
+.eslintrc
+.gitignore
+
+package.json
+package-lock.json
+
+tsconfig.json
+README.md 
+
