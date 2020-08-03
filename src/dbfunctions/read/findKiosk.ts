@@ -1,20 +1,22 @@
 import { client, db } from '../dbinfo';
 
+
+/**
+ * @interface Kiosk represents the Kiosk document in MongoDB
+ */
 export interface Kiosk {
-    _id: string;
+    _id: number;
     kioskID: string;
     apiKey: string;
 }
 
-export const findKiosk = async (searchedForKiosk: string): Promise<Kiosk> =>
-    new Promise((resolve) => {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        client.connect(db, async function (err: Error, db: any) {
-            if (err) throw err;
-            const res = await db
-                .db('db')
-                .collection('kiosks')
-                .findOne({ kioskID: searchedForKiosk });
-            resolve(res);
-        });
-    });
+/**
+ * @param {string} searchedForKiosk - kioskID
+ * @returns {Kiosk | null} an <Kiosk> object from the database or null if not exists.
+ */
+export default async (searchedForKiosk: string): Promise<Kiosk> => {
+    return (await (await client.connect(db))
+        .db('db')
+        .collection('kiosks')
+        .findOne({ kioskID: searchedForKiosk })) as Kiosk;
+};
