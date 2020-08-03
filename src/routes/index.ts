@@ -5,24 +5,20 @@ import getUser from '../dbfunctions/read/getUser';
 
 const routes = express.Router();
 
-const isAuth = async (
-    kioskID: string | undefined,
-    apikey: string | undefined,
-) => {
-    return await authenticate(kioskID || 'undefined', apikey || 'undefined');
-};
-
 /**
  * GET auth response
  */
 routes.get('/', async (req, res) => {
     // call database auth function to validate kiosk
-    const auth = isAuth(req.get('kioskID'), req.get('apikey'));
+    const auth = await authenticate(
+        req.get('kiosk-id') as string,
+        req.get('api-key') as string,
+    );
 
     if (auth) {
         // authorised kiosks will see this message
         res.status(200).json({
-            detectedUser: `${req.get('kioskID')} connected.`,
+            detectedUser: `${req.get('kiosk-id')} connected.`,
         });
     } else {
         // reject noauth kiosks
@@ -33,33 +29,39 @@ routes.get('/', async (req, res) => {
 /**
  *  GET user balance
  */
-routes.get('/user/:id', async (req, res) => {
-    const auth = isAuth(req.get('kioskID'), req.get('apikey'));
 
+routes.get('/user/:id', async (req, res) => {
+    const auth = await authenticate(
+        req.get('kiosk-id') as string,
+        req.get('api-key') as string,
+    );
     if (auth) {
         // return user json data
 
-        try{
+        try {
             await getUser(req.params.id)
-            .then((user) => {
-                res.status(200).json(user);
-            })
-            .catch((err) => {
-                console.error(err);
-                res.status(404).json({
-                    message: 'User not found.',
-                    failedID: req.params.id,
+                .then((user) => {
+                    res.status(200).json(user);
+                })
+                .catch((err) => {
+                    console.error(err);
+                    res.status(404).json({
+                        message: 'User not found.',
+                        failedID: req.params.id,
+                    });
                 });
-            });
-        }catch(err){
-            console.error(err);
+        } catch (err) {
             res.status(400).json({
-                message : 'The ID provided was invalid. It must be a string of 12 bytes.',
-                failedID : req.params.id
-            })
+                message:
+                    'The ID provided was invalid. It must be a string of 12 bytes.',
+                failedID: req.params.id,
+            });
         }
-
+    } else {
+        // reject noauth kiosks
+        res.status(403).json({ message: 'Unauthorised access denied.' });
     }
 });
+
 
 export default routes;
