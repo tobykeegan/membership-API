@@ -1,15 +1,16 @@
-import { findKiosk } from './dbfunctions/read/findKiosk';
+import findKiosk, {Kiosk} from './dbfunctions/read/findKiosk';
+
 
 export default async function (id: string, key: string): Promise<boolean> {
-    if (id == 'undefined' || key == 'undefined') {
-        return false;
-    } else {
-        const result = await findKiosk(id);
-
-        if (result.apiKey == key) {
+    try {
+        const result: Kiosk = await findKiosk(id);
+        if (result.apiKey.toString() == key) {
             return true;
         } else {
             return false;
         }
+    } catch (err) {
+        console.log(err);
+        return false;
     }
 }
