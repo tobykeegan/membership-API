@@ -8,7 +8,6 @@ export interface User {
     balance: string;
 }
 
-
 export default async (searchedUser: string): Promise<User> => {
     return (await (await client.connect(db))
         .db('db')

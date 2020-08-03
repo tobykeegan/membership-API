@@ -1,6 +1,5 @@
 import { client, db } from '../dbinfo';
 
-
 /**
  * @interface Kiosk represents the Kiosk document in MongoDB
  */

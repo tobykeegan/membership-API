@@ -63,5 +63,4 @@ routes.get('/user/:id', async (req, res) => {
     }
 });
 
-
 export default routes;
