@@ -15,12 +15,12 @@ routes.get('/', async (req, res) => {
         });
     } else {
         // reject noauth kiosks
-        res.status(403).json({ message: 'Unauthorised access denied.' });
+        res.status(401).json({ message: 'Unauthorised access denied.' });
     }
 });
 
 /**
- *  GET user balance
+ *  GET user info
  */
 routes.get('/user/:id', async (req, res) => {
     if (req.auth) {
@@ -46,7 +46,7 @@ routes.get('/user/:id', async (req, res) => {
         }
     } else {
         // reject noauth kiosks
-        res.status(403).json({ message: 'Unauthorised access denied.' });
+        res.status(401).json({ message: 'Unauthorised access denied.' });
     }
 });
 
@@ -61,12 +61,11 @@ routes.get('/user/:id/transaction', async (req, res) => {
         try {
             const user = await getUser(id); // get original values for user
 
-            if (user.balance + value >= 0) {
-                // simple check if the transaction can proceed
-                await transaction(id, value) // call a MongoDB transaction
-                    .then((data) => {
+            if (user.balance + value >= 0) { // simple check if the transaction can proceed
+                await transaction(id, value)    // call a MongoDB transaction
+                    .then((data) => {       
                         res.status(200).json({
-                            balance: data.value.balance.toFixed(2),
+                            balance: data.value.balance.toFixed(2), // if succeeds then return new balance
                         });
                     })
                     .catch((err) => {
