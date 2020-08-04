@@ -5,13 +5,12 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "dev": "ts-node src/app.ts",
+    "dev": "nodemon --exec ts-node src/app.ts",
     "start": "node dist/app.js",
     "build": "tsc -p .",
     "lint": "npx prettier --write . && eslint . --ext .ts && npx tsc --noemit",
     "test": ""
   },
-  
   "repository": {
     "type": "git",
     "url": "git+https://github.com/tobykeegan/membership-API.git"
@@ -37,6 +36,7 @@
     "express": "^4.17.1",
     "helmet": "^3.23.3",
     "mongoose": "^5.9.26",
+    "nodemon": "^2.0.4",
     "passport-headerapikey": "^1.2.1",
     "passport-http": "^0.3.0",
     "passport-local": "^1.0.0",
