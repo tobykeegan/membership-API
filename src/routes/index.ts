@@ -1,6 +1,4 @@
 import express from 'express';
-// import passport from "passport";
-import authenticate from '../authenticate';
 import getUser from '../dbfunctions/read/getUser';
 
 const routes = express.Router();
@@ -9,12 +7,6 @@ const routes = express.Router();
  * GET auth response
  */
 routes.get('/', async (req, res) => {
-    // call database auth function to validate kiosk
-    // const auth = await authenticate(
-    //     req.get('kiosk-id') as string,
-    //     req.get('api-key') as string,
-    // );
-
     if (req.auth) {
         // authorised kiosks will see this message
         res.status(200).json({
@@ -29,15 +21,9 @@ routes.get('/', async (req, res) => {
 /**
  *  GET user balance
  */
-
 routes.get('/user/:id', async (req, res) => {
-    // const auth = await authenticate(
-    //     req.get('kiosk-id') as string,
-    //     req.get('api-key') as string,
-    // );
     if (req.auth) {
         // return user json data
-
         try {
             await getUser(req.params.id)
                 .then((user) => {

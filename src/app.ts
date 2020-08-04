@@ -7,6 +7,10 @@ import authenticate from './authenticate';
 const app: Express = express();
 const PORT = 3000;
 
+/**
+ *  Use the custom authentication module for kiosk auth
+ * @returns {boolean} req.auth
+ */
 async function validateKiosk(req: Request, res: Response, next: NextFunction) {
     const kiosk = req.get('kiosk-id') as string;
     const key = req.get('api-key') as string;
