@@ -10,12 +10,12 @@ const routes = express.Router();
  */
 routes.get('/', async (req, res) => {
     // call database auth function to validate kiosk
-    const auth = await authenticate(
-        req.get('kiosk-id') as string,
-        req.get('api-key') as string,
-    );
+    // const auth = await authenticate(
+    //     req.get('kiosk-id') as string,
+    //     req.get('api-key') as string,
+    // );
 
-    if (auth) {
+    if (req.auth) {
         // authorised kiosks will see this message
         res.status(200).json({
             detectedUser: `${req.get('kiosk-id')} connected.`,
@@ -31,11 +31,11 @@ routes.get('/', async (req, res) => {
  */
 
 routes.get('/user/:id', async (req, res) => {
-    const auth = await authenticate(
-        req.get('kiosk-id') as string,
-        req.get('api-key') as string,
-    );
-    if (auth) {
+    // const auth = await authenticate(
+    //     req.get('kiosk-id') as string,
+    //     req.get('api-key') as string,
+    // );
+    if (req.auth) {
         // return user json data
 
         try {
