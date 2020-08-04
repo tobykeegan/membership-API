@@ -5,7 +5,7 @@ export interface User {
     _id: number;
     firstName: string;
     lastName: string;
-    balance: string;
+    balance: number;
 }
 
 export default async (searchedUser: string): Promise<User> => {
