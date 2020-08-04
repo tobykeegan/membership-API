@@ -7,8 +7,7 @@ import authenticate from './authenticate';
 const app: Express = express();
 const PORT = 3000;
 
-
-async function validateKiosk (req : Request, res : Response, next : NextFunction){
+async function validateKiosk(req: Request, res: Response, next: NextFunction) {
     const kiosk = req.get('kiosk-id') as string;
     const key = req.get('api-key') as string;
     req.auth = await authenticate(kiosk, key);
@@ -22,7 +21,6 @@ async function validateKiosk (req : Request, res : Response, next : NextFunction
 app.use(helmet());
 
 app.use(validateKiosk);
-
 
 /**
  * Additional middlewares are included beneath
