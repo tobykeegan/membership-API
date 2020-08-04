@@ -1,6 +1,5 @@
 node_modules
 dist
 
-settings.json
 dbcontents.json
 npm-debug.log
