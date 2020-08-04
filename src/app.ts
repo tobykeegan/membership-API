@@ -1,20 +1,28 @@
-import express, { Application } from 'express';
+import express, { Express, Request, Response, NextFunction } from 'express';
 import helmet from 'helmet';
 import bodyParser from 'body-parser';
-// import { Document, Model, model, Types, Schema, Query } from "mongoose"
 import routes from './routes/index';
-// import passport from "passport";
-// import { BasicStrategy } from "passport-http";
+import authenticate from './authenticate';
 
-const app: Application = express();
+const app: Express = express();
 const PORT = 3000;
+
+
+async function validateKiosk (req : Request, res : Response, next : NextFunction){
+    const kiosk = req.get('kiosk-id') as string;
+    const key = req.get('api-key') as string;
+    req.auth = await authenticate(kiosk, key);
+    next();
+}
 
 /**
  * We can increase the security of the API by using
  * the Helmet middleware to manage HTTP headers
  */
-
 app.use(helmet());
+
+app.use(validateKiosk);
+
 
 /**
  * Additional middlewares are included beneath
