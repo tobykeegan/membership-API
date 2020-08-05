@@ -38,5 +38,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/', routes);
 
 app.listen(PORT, () => {
+    // eslint-disable-next-line no-console
     console.log(`The server is listening on port ${PORT}`);
 });
