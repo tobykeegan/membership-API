@@ -1,4 +1,4 @@
-import findKiosk, { Kiosk } from './dbfunctions/read/findKiosk';
+import findKiosk from './dbfunctions/read/findKiosk';
 
 export default async function (id: string, key: string): Promise<boolean> {
     try {
@@ -9,7 +9,6 @@ export default async function (id: string, key: string): Promise<boolean> {
             return false;
         }
     } catch (err) {
-        console.log(err);
         return false;
     }
 }

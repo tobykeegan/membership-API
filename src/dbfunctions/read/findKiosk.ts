@@ -1,13 +1,5 @@
 import { client, db } from '../dbinfo';
 
-/**
- * @interface Kiosk represents the Kiosk document in MongoDB
- */
-export interface Kiosk {
-    _id: number;
-    kioskID: string;
-    apiKey: string;
-}
 
 /**
  * @param {string} searchedForKiosk - kioskID
