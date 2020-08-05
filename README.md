@@ -8,13 +8,25 @@ This is a playground to experiment with ways of completing my Firebrand synoptic
 
 -----
 
-## Endpoint overview
+## Users and transactions
 
-Method | Endpoint | Function
---- | --- | ---
-GET | / | Determines if a kiosk has auth.
-GET | /user/:id | Retrieves name and balance of user
-PUT | /user/:id/:value | Increase or deduct from user balance
+Method | Endpoint | Function | Implemented?
+:---: | --- | --- | :---: 
+GET | /api | Returns a functional overview of the API | ❌
+GET | /api/user/:id | Returns a User object with balance info | ❌
+PUT | /api/user/:id | Modifies a User object with new fields provided in the body. This action cannot change their balance. | ❌
+DELETE | /api/user/:id | Deletes a User object from the system. This is a permenant action and irreversible.| ❌
+PUT | /api/user/balance/:id | Increase or deduct from user balance and return the new User object | ❌
+
+## Kiosks  
+
+Method | Endpoint | Function | Implemented?
+:---: | --- | --- | :---: 
+GET | /api/kiosk/online | Returns an array of Kiosk objects, with their  human-readable name and UID | ❌
+GET | /api/kiosk/:name | Returns a kiosk object, if the name exists. Includes the UID. | ❌
+POST | /api/kiosk/:name | Creates a new Kiosk, auto-assigning a new UID and api-key for the Kiosk to use | ❌
+PUT | /api/kiosk/:name |  Modifies the name of a Kiosk, without changing the UID. | ❌
+GET | /api/kiosk/id/:id | Returns a single Kiosk object matching the UID provided | ❌
 
 _More to be added in time_
 
