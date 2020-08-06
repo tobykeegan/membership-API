@@ -13,7 +13,7 @@ This is a playground to experiment with ways of completing my Firebrand synoptic
 Method | Endpoint | Function | Implemented?
 :---: | --- | --- | :---: 
 GET | /api | Returns a functional overview of the API | ❌
-GET | /api/user/:id | Returns a User object with balance info | ❌
+GET | /api/user/:id | Returns a User object with balance info | ✅
 PUT | /api/user/:id | Modifies a User object with new fields provided in the body. This action cannot change their balance. | ❌
 DELETE | /api/user/:id | Deletes a User object from the system. This is a permenant action and irreversible.| ❌
 PUT | /api/user/balance/:id | Increase or deduct from user balance and return the new User object | ❌
