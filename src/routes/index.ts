@@ -30,7 +30,7 @@ routes.get('/', async (req, res) => {
 /**
  *  INCREMENT user balance
  */
-routes.get('/user/:id/transaction', async (req, res) => {
+routes.put('/api/user/balance/:id', async (req, res) => {
     if (req.auth) {
         const id = req.params.id as string;
         const value = req.body.value as number;
