@@ -1,7 +1,6 @@
 import express from 'express';
 import getUser from '../../dbfunctions/read/getUser';
 
-
 const routes = express.Router();
 
 /**

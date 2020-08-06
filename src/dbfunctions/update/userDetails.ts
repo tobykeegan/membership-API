@@ -1,9 +1,6 @@
 import { client, db } from '../dbinfo';
 import { ObjectId } from 'mongodb';
 
-
-
-
 export default async (
     searchedUser: string,
     increment: number,

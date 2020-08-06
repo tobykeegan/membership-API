@@ -1,6 +1,5 @@
 import { client, db } from '../dbinfo';
 
-
 /**
  * @param {string} searchedForKiosk - kioskID
  * @returns {Kiosk | null} an <Kiosk> object from the database or null if not exists.
