@@ -5,8 +5,11 @@ import { client, db } from '../dbinfo';
  * @returns {Kiosk | null} an <Kiosk> object from the database or null if not exists.
  */
 export default async (searchedForKiosk: string): Promise<Kiosk> => {
-    return (await (await client.connect(db))
+    // connect to the database
+    const conn = await client.connect(db);
+    // return search value
+    return (await conn
         .db('db')
-        .collection('kiosks')
+        .collection('Kiosks')
         .findOne({ kioskID: searchedForKiosk })) as Kiosk;
 };
