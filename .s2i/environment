@@ -1,1 +1,3 @@
 NPM_MIRROR=https://registry.npmjs.org
+
+MONGO_DB=mongodb://userC5L:5dVJHxo8YGYm8VOi@mongodb/db
