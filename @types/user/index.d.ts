@@ -1,6 +1,10 @@
 interface User {
     _id: number;
-    firstName: string;
-    lastName: string;
+    empId: string;
+    empFirstName: string;
+    empLastName: string;
+    empEmail: string;
+    empPhone: string;
+    empCode: string;
     balance: number;
 }
