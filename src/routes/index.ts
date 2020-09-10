@@ -15,7 +15,7 @@ routes.get('/', async (req, res) => {
     if (req.auth) {
         // authorised kiosks will see this message
         res.status(200).json({
-            detectedUser: `${req.get('kiosk-id')} connected.`,
+            detectedUser: `${req.get('kioskID')} connected.`,
         });
     } else {
         // reject noauth kiosks
