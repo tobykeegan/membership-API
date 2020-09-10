@@ -5,15 +5,15 @@ import routes from './routes/index';
 import authenticate from './authenticate';
 
 const app: Express = express();
-const PORT = 8080;
+const PORT = process.env.PORT || 3000;
 
 /**
  *  Use the custom authentication module for kiosk auth
  * @returns {boolean} req.auth
  */
 async function validateKiosk(req: Request, res: Response, next: NextFunction) {
-    const kiosk = req.get('kiosk-id') as string;
-    const key = req.get('api-key') as string;
+    const kiosk = req.get('kioskID') as string;
+    const key = req.get('apiKey') as string;
     req.auth = await authenticate(kiosk, key);
     next();
 }
