@@ -6,7 +6,6 @@ const routes = express.Router();
 
 function validateString(inp: string) {
     const pattern = /[a-zA-Z0-9]{16}/;
-    console.log(pattern.test(inp));
     return pattern.test(inp);
 }
 
