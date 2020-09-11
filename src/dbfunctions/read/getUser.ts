@@ -7,6 +7,6 @@ export default async (searchedUser: string): Promise<User> => {
     const conn = await client.connect(db);
     return (await conn
         .db('db')
-        .collection('users')
+        .collection('Users')
         .findOne({ empId: searchedUser })) as User;
 };
