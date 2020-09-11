@@ -15,7 +15,13 @@ async function validateKiosk(req: Request, res: Response, next: NextFunction) {
     const kiosk = req.get('kioskID') as string;
     const key = req.get('apiKey') as string;
     req.auth = await authenticate(kiosk, key);
-    next();
+
+    // let middleware handle rejection across all endpoints
+    if (req.auth) {
+        next();
+    } else {
+        res.status(401).json({ message: 'Unauthorised access denied.' });
+    }
 }
 
 /**

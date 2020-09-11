@@ -13,36 +13,31 @@ function validateString(inp: string) {
  *  GET User Object
  */
 export default routes.get('/api/user/:id', async (req, res) => {
-    if (req.auth) {
-        // return user json data
+    // return user json data
 
-        try {
-            if (!validateString(req.params.id)) throw Error;
-            await getUser(req.params.id)
-                .then((user) => {
-                    res.status(200).json({
-                        action: 'showWelcome',
-                        content: `Welcome, ${user.empFirstName}!`,
-                    });
-                })
-                // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                .catch((err) => {
-                    res.location('/api/register/:id');
-                    res.status(404).json({
-                        message: 'User not found.',
-                        failedID: req.params.id,
-                    });
+    try {
+        if (!validateString(req.params.id)) throw Error;
+        await getUser(req.params.id)
+            .then((user) => {
+                res.status(200).json({
+                    action: 'showWelcome',
+                    content: `Welcome, ${user.empFirstName}!`,
                 });
-        } catch (err) {
-            console.log(err);
-            res.status(400).json({
-                message:
-                    'The ID provided was invalid. It must be a string of 16 alphanumeric characters.',
-                failedID: req.params.id,
+            })
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            .catch((err) => {
+                res.location('/api/register/:id');
+                res.status(404).json({
+                    message: 'User not found.',
+                    failedID: req.params.id,
+                });
             });
-        }
-    } else {
-        // reject noauth kiosks
-        res.status(401).json({ message: 'Unauthorised access denied.' });
+    } catch (err) {
+        console.log(err);
+        res.status(400).json({
+            message:
+                'The ID provided was invalid. It must be a string of 16 alphanumeric characters.',
+            failedID: req.params.id,
+        });
     }
 });
