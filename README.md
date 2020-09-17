@@ -24,7 +24,7 @@ You **must** include these headers in **every** request you make to the API, or 
 -----
 
 
-### `GET /api/`
+### `GET /api/` to log a user in
 The root URL currently authenticates the kiosk, but does nothing else. This is useful for debugging and connecting a new kiosk to the system. Any body provided with this request will be ignored. There are two results that this can return:
 
 ```json
@@ -127,5 +127,41 @@ A second tap of the card
 HTTP STATUS 403
 {
     message : "Session expired. Goodbye"
+}
+```
+-----
+
+### `POST /api/register/:id` to register a new card
+
+
+
+#### Request
+Body containing:
+```json
+{
+    empFirstName: <name>,
+    empLastName: <surname>,
+    empEmail: email@mail.com,
+    empPhone: 0123455289,
+    empCode: 1357
+}
+```
+_where the details haven't been registered yet_
+#### Response
+
+```json
+HTTP STATUS 201
+```
+
+-----
+
+#### Request
+A body containing a user that's already been registered to the system
+
+#### Response
+```json
+HTTP STATUS 409
+{
+    "message": "Failed - user already exists"
 }
 ```
