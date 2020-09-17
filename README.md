@@ -46,6 +46,7 @@ HTTP STATUS 200
 ### `GET /api/user/:id`
 
 Encoding a card ID into the URL of this endpoint has a few outcomes:
+
 -----
 
 #### Request
