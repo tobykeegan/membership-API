@@ -46,7 +46,7 @@ export default routes.get('/:id', async (req, res) => {
                     }
                 }
             })
-            .catch((err) => {
+            .catch(() => {
                 res.location('/api/register/:id');
                 res.status(404).json({
                     action: 'register',
