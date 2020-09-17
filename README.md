@@ -3,32 +3,8 @@
 
 -----
 
-This is a playground to experiment with ways of completing my Firebrand synoptic project. 
+This software stack enables a membership system for First Catering Ltd. 
 
-
------
-
-## Users and transactions
-
-Method | Endpoint | Function | Implemented?
-:---: | --- | --- | :---: 
-GET | /api | Returns a functional overview of the API | ❌
-GET | /api/user/:id | Returns a User object with balance info | ✅
-PUT | /api/user/:id | Modifies a User object with new fields provided in the body. This action cannot change their balance. | ❌
-DELETE | /api/user/:id | Deletes a User object from the system. This is a permenant action and irreversible.| ❌
-PUT | /api/user/balance/:id | Increase or deduct from user balance and return the new User object | ❌
-
-## Kiosks  
-
-Method | Endpoint | Function | Implemented?
-:---: | --- | --- | :---: 
-GET | /api/kiosk/online | Returns an array of Kiosk objects, with their  human-readable name and UID | ❌
-GET | /api/kiosk/:name | Returns a kiosk object, if the name exists. Includes the UID. | ❌
-POST | /api/kiosk/:name | Creates a new Kiosk, auto-assigning a new UID and api-key for the Kiosk to use | ❌
-PUT | /api/kiosk/:name |  Modifies the name of a Kiosk, without changing the UID. | ❌
-GET | /api/kiosk/id/:id | Returns a single Kiosk object matching the UID provided | ❌
-
-_More to be added in time_
 
 
 -----
@@ -36,51 +12,119 @@ _More to be added in time_
 
 All accessible endpoints of this API are secured by a back-end kiosk authentication system. This system ensures that only kiosks recognised by the database are allowed to charge user accounts. To enable this authentication, all API calls must include the following headers: 
 
-```json
-{
-    "kioskID" : "<Kiosk ID goes here>",
-    "apikey" : "<Secret API key>"
-}
-```
+Key | Value
+:-:|:--
+kioskID | KAO33FSX1WC
+apiKey | 162BD502-130C-9E14-C44C-DE99ED9C74DC
+
+
 
 You **must** include these headers in **every** request you make to the API, or you will get `Error 403 - Forbidden`.
 
-### `GET /`
+-----
+
+
+### `GET /api/`
 The root URL currently authenticates the kiosk, but does nothing else. This is useful for debugging and connecting a new kiosk to the system. Any body provided with this request will be ignored. There are two results that this can return:
 
 ```json
+HTTP STATUS 403
 {
     "message": "Unauthorised access denied."
 }
 ```
+
 ```json
+HTTP STATUS 200
 {
-    "detectedUser": "<KioskID> connected successfully."
+    "detectedUser": "<KioskID> connected."
+}
+```
+-----
+
+
+### `GET /api/user/:id`
+
+Encoding a card ID into the URL of this endpoint has a few outcomes:
+-----
+
+#### Request
+Valid ID, no PIN included
+#### Response
+
+```json
+HTTP STATUS 406
+{
+    "action": "getPin"
+}
+```
+-----
+#### Request
+Valid ID, PIN included
+#### Response
+```json
+HTTP STATUS 200
+{
+    "action": "showWelcome",
+    "content": "Welcome, User!"
+}
+```
+-----
+#### Request
+Valid ID, invalid PIN included
+#### Response
+
+```json
+HTTP STATUS 403
+{
+    "message": "PIN code incorrect."
 }
 ```
 
-### `GET /user/:id`
-
-Encoding a user ID into the URL with the `/user` prefix will return the basic details of the member. This system currently uses the included ObjectID from MongoDB as a unique identifier for each user. *This will be deprecated soon and replaced with stronger, randomly generated IDs.*
-
-For now, these are the possible outcomes:
-
-#### Input
-`GET /user/5f23fc8c1d73d90680737980`
-#### Outputs
-`Status : 
+-----
+#### Request
+A valid, but non-existing User ID
+#### Response
 ```json
+HTTP STATUS 404
 {
-    "_id": "5f23fc8c1d73d90680737980",
-    "firstName": "John",
-    "lastName": "Doe",
-    "balance": "£91.72"
-}
-```
-```json
-{
+    "action": "register",
     "message": "User not found.",
-    "failedID": "5f23fc8c1d73d90680737980"
+    "failedID": "abcdef1234567899"
 }
 ```
+_This will also include a header containing the URI to POST with new user details_
 
+-----
+
+#### Request
+Invalid ID
+#### Response
+```json
+HTTP STATUS 400
+{
+    "message": "The ID provided was invalid. It must be a string of 16 alphanumeric characters.",
+    "failedID": "kM_56FnG0P+6F56e"
+}
+```
+-----
+#### Request
+Any request with an expired session
+#### Response
+
+```json
+HTTP STATUS 403
+{
+    message : "Session expired. Goodbye"
+}
+```
+-----
+#### Request
+A second tap of the card
+#### Response
+```json
+HTTP STATUS 403
+{
+    message : "Session expired. Goodbye"
+}
+```
