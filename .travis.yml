@@ -7,7 +7,7 @@ cache:
         - 'node_modules'
 
 install:
-    - npm install newma
+    - npm install eslint
 
 before_script:
     - node --version
