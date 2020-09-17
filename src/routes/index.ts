@@ -1,12 +1,6 @@
 import express from 'express';
 
 /**
- *  Import database functions
- */
-import getUser from '../dbfunctions/read/getUser';
-import transaction from '../dbfunctions/update/transaction';
-
-/**
  *  Import routes
  */
 import getUserObject from './user/getUserObject';
