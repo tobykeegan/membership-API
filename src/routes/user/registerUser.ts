@@ -5,26 +5,22 @@ import addUser from '../../dbfunctions/write/addUser';
 const routes = express.Router();
 
 export default routes.post('/:id', async (req, res) => {
-
     // add the employee ID to the object
     Object.assign(req.body, { empId: req.params.id as string });
-    
-    console.log("Employee being added:");
-    console.info(req.body)
 
-
+    console.log('Employee being added:');
+    console.info(req.body);
 
     await addUser(req.body)
         .then((result) => {
-            console.log(result)
-            if(result){
+            console.log(result);
+            if (result) {
                 res.sendStatus(201); // return 201 - created if the resource was created
-            }else{
+            } else {
                 res.status(409).json({
                     message: 'Failed - user already exists',
                 });
             }
-            
         })
         .catch((err) => {
             res.status(500).json({
@@ -33,5 +29,3 @@ export default routes.post('/:id', async (req, res) => {
             });
         });
 });
-
-

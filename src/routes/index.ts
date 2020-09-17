@@ -29,12 +29,6 @@ routes.get('/', async (req, res) => {
     });
 });
 
-
-
-
-
-
-
 /**
  *  INCREMENT user balance
  */

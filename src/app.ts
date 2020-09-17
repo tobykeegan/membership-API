@@ -71,7 +71,7 @@ async function auth(req: Request, res: Response, next: NextFunction) {
             res.cookie('reqID', reqID).cookie('lastAccess', Date.now());
         }
         // continue to the app
-        
+
         next();
     }
 }

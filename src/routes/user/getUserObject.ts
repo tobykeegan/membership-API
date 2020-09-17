@@ -32,10 +32,12 @@ export default routes.get('/:id', async (req, res) => {
                 } else {
                     if (pin == user.empCode) {
                         // does pin match DB entry?
-                        res.cookie('tapped', true).status(200).json({
-                            action: 'showWelcome',
-                            content: `Welcome, ${user.empFirstName}!`,
-                        });
+                        res.cookie('tapped', true)
+                            .status(200)
+                            .json({
+                                action: 'showWelcome',
+                                content: `Welcome, ${user.empFirstName}!`,
+                            });
                     } else {
                         res.status(403).json({
                             // reject incorrect PIN
